@@ -25,7 +25,7 @@ public class HasMoneyState implements State {
     @Override
     public void insertCoin(VendingMachine machine, Coin coin) throws Exception {
         System.out.println("accepted the coin");
-        machine.getCointList().add(coin);
+        machine.getCoinList().add(coin);
     }
 
     @Override

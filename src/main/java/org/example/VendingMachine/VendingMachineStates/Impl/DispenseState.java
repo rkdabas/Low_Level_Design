@@ -2,6 +2,7 @@ package org.example.VendingMachine.VendingMachineStates.Impl;
 
 import org.example.VendingMachine.Coin;
 import org.example.VendingMachine.Item;
+import org.example.VendingMachine.ItemShelf;
 import org.example.VendingMachine.VendingMachine;
 import org.example.VendingMachine.VendingMachineStates.State;
 
@@ -41,10 +42,17 @@ public class DispenseState implements State {
     @Override
     public Item dispenseProduct(VendingMachine machine, int codeNumber) throws Exception {
         System.out.println("Product has been despensed");
-        Item item=machine.getInventory().getInventory().getItem(codeNumber);
-        machine.setInventory().updateSoldOutItem(codeNumber);
+        ItemShelf[] inventory=machine.getInventory().getInventory();
+        Item product=null;
+        for(ItemShelf item:inventory){
+            if(item.getCode()==codeNumber){
+                product=item.getItem();
+                item.setSoldOut(true);
+                break;
+            }
+        }
         machine.setVendingMachineState(new IdleState());
-        return item;
+        return product;
     }
 
     @Override

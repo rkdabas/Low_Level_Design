@@ -4,6 +4,7 @@ import org.example.VendingMachine.Coin;
 import org.example.VendingMachine.Item;
 import org.example.VendingMachine.VendingMachine;
 import org.example.VendingMachine.VendingMachineStates.State;
+import org.example.VendingMachine.ItemShelf;
 
 import java.util.List;
 
@@ -29,11 +30,18 @@ public class SelectionState implements State {
 
     @Override
     public void chooseProduct(VendingMachine machine, int codeNumber) throws Exception {
-        Item item=machine.getInventory().getItem(codeNumber);
+        ItemShelf[] inventory = machine.getInventory().getInventory();
+        Item item = null;
+        for (ItemShelf shelf : inventory) {
+            if (shelf.getCode() == codeNumber) {
+                item = shelf.getItem();
+                break;
+            }
+        }
 
         int paidByUser=0;
         for(Coin coin:machine.getCoinList()){
-            paidByUser=paidByUse+coin.value;
+            paidByUser=paidByUser+coin.value;
         }
 
         if(paidByUser < item.getPrice()){

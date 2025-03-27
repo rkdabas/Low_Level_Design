@@ -1,6 +1,7 @@
 package org.example.VendingMachine.VendingMachineStates.Impl;
 
 import org.example.VendingMachine.Coin;
+import org.example.VendingMachine.Inventory;
 import org.example.VendingMachine.Item;
 import org.example.VendingMachine.VendingMachine;
 import org.example.VendingMachine.VendingMachineStates.State;
@@ -55,6 +56,8 @@ public class IdleState implements State {
 
     @Override
     public void updateInventory(VendingMachine machine, Item item, int codeNumber) throws Exception {
-        machine.setInventory().addItem(item,codeNumber);
+        Inventory inventory=machine.getInventory();
+        inventory.addItem(item,codeNumber);
+        machine.setInventory(inventory);
     }
 }
